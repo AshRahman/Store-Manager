@@ -58,21 +58,34 @@ class Item:
             return False
 
     def __repr__(self) -> str:
-        return f"Item('{self.name}',{self.price},{self.quantity})"  # Best Practice for using __repr__
+        return f"{self.__class__.__name__}('{self.name}',{self.price},{self.quantity})"  # Best Practice for using __repr__
 
 
-print(Item.is_integer(7.5))
+class Phone(Item):
+    def __init__(
+        self,
+        name: str,  # //? specifying the datatypes makes it more precise on what it should take as input
+        price: float,
+        quantity=0,
+        broken_phones=0,
+    ):  # * * magic method. This will be called first when initializing an object
+        # TODO: call to super function to have access to all attributes/methods
+        super().__init__(name, price, quantity)
 
-# Item.instantiate_from_csv()
-# print(Item.all)
+        # TODO: Run validation to the received arguments
+        assert (
+            broken_phones >= 0
+        ), f"Broken phones {broken_phones} is not greater than or equal to 0"
 
-""" 
-item2.has_numpad = False
-print(Item.__dict__)  # dict is a magic attribute for printing out all the instances
-print(item1.__dict__)
-item1.apply_discount()
-print(item1.price)
+        # TODO: Assigned to self objects
+        self.broken_phones = broken_phones
 
-item2.pay_rate = 0.7
-item2.apply_discount()
-print(item2.price) """
+        # TODO: Actions to execute
+        # Phone.all.append(self) inherits the all from parent class
+
+
+phone1 = Phone("IPhone10", 500, 4)
+print(phone1.calculate_total_price())
+
+print(Item.all)
+print(Phone.all)
